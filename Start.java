@@ -20,13 +20,9 @@ public class Start extends JFrame {
     public Start() {
         Locale selectedLocale = selectLanguage();
 
-        ResourceBundle messages = ResourceBundle.getBundle("./out/ResourceBundles/Resource Bundle 'MessagesBuncle'", selectedLocale);
+        ResourceBundle messages = ResourceBundle.getBundle("myProp", selectedLocale);
 
-
-
-
-
-
+        System.out.println("messages = " + messages.getString("welcomeMessage"));
 
         setSize(700, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -356,11 +352,11 @@ public class Start extends JFrame {
                 options[0]);
 
         if (choice == 0) {
-            return new Locale.Builder().setLanguage("pl").setRegion("PL").build();
+            return new Locale.Builder().setLanguage("pl").build();
         } else if (choice == 2) {
-            return new Locale.Builder().setLanguage("fr").setRegion("FR").build();
+            return new Locale.Builder().setLanguage("fr").build();
         } else {
-            return new Locale.Builder().setLanguage("en").setRegion("US").build();
+            return new Locale.Builder().setLanguage("en").build();
         }
     }
 
