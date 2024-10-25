@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -37,10 +38,10 @@ public class Start extends JFrame {
 
         JTextArea welcomeTextArea = new JTextArea(messages.getString("welcomeMessage"));
         welcomeTextArea.setLineWrap(true);
-        welcomeTextArea.setWrapStyleWord(false);
+        welcomeTextArea.setWrapStyleWord(true);
         welcomeTextArea.setEditable(false);
         welcomeTextArea.setOpaque(false);
-        welcomeTextArea.setPreferredSize(new Dimension(400, 85));
+        welcomeTextArea.setPreferredSize(new Dimension(400, 95));
 
         JOptionPane.showMessageDialog(
                 this,
@@ -105,8 +106,13 @@ public class Start extends JFrame {
                         double b = (sizeOfData * sum_xy - sum_x * sum_y) / W;
 
                         // zmiana pól w klasie Start
-                        getA().setText("a = " + a);
-                        getB().setText("b = " + b);
+                        if (selectedLocale.equals(Locale.ENGLISH)) {
+                            getA().setText("a = " + NumberFormat.getInstance(Locale.ENGLISH).format(a));
+                            getB().setText("b = " + NumberFormat.getInstance(Locale.ENGLISH).format(b));
+                        } else {
+                            getA().setText("a = " + NumberFormat.getInstance(Locale.FRANCE).format(a));
+                            getB().setText("b = " + NumberFormat.getInstance(Locale.FRANCE).format(b));
+                        }
 
                         // zamknięcie bufora czytania
                         bufferedReader.close();
