@@ -11,23 +11,47 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class Start extends JFrame {
-    private final JButton readButton = new JButton("ReadFile");
+    private JButton readButton = new JButton("ReadFile");
     public JLabel a = new JLabel("a = ");
     public JLabel b = new JLabel("b = ");
     private final TreeMap<Double, Double> points = new TreeMap<>();
     private final PlotPanel plotPanel = new PlotPanel(0, 0, new TreeMap<>());
 
     public Start() {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Locale selectedLocale = selectLanguage();
 
         ResourceBundle messages = ResourceBundle.getBundle("myProp", selectedLocale);
 
-        System.out.println("messages = " + messages.getString("welcomeMessage"));
+        // aktualizacja przycisku na podstawie języka
+        readButton = new JButton(messages.getString("read"));
+        readButton.setBackground(Color.BLUE);
+        readButton.setForeground(Color.WHITE);
+        readButton.setFont(new Font("Arial", Font.BOLD, 14));
+
+
+        JTextArea welcomeTextArea = new JTextArea(messages.getString("welcomeMessage"));
+        welcomeTextArea.setLineWrap(true);
+        welcomeTextArea.setWrapStyleWord(false);
+        welcomeTextArea.setEditable(false);
+        welcomeTextArea.setOpaque(false);
+        welcomeTextArea.setPreferredSize(new Dimension(400, 85));
+
+        JOptionPane.showMessageDialog(
+                this,
+                welcomeTextArea,
+                messages.getString("welcomeTitle"),
+                JOptionPane.PLAIN_MESSAGE
+        );
 
         setSize(700, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
 
         class Dzialaj implements Runnable {
             @Override
