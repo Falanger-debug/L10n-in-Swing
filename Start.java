@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class Start extends JFrame {
@@ -16,6 +18,16 @@ public class Start extends JFrame {
     private final PlotPanel plotPanel = new PlotPanel(0, 0, new TreeMap<>());
 
     public Start() {
+        Locale selectedLocale = selectLanguage();
+
+        ResourceBundle messages = ResourceBundle.getBundle("./out/ResourceBundles/Resource Bundle 'MessagesBuncle'", selectedLocale);
+
+
+
+
+
+
+
         setSize(700, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -324,5 +336,38 @@ public class Start extends JFrame {
 
     public JLabel getB() {
         return b;
+    }
+
+    private Locale selectLanguage() {
+        ImageIcon polishIcon = resizeIcon(new ImageIcon("./out/images/polish.png"), 32, 32);
+        ImageIcon englishIcon = resizeIcon(new ImageIcon("./out/images/english.png"), 32, 32);
+        ImageIcon franceIcon = resizeIcon(new ImageIcon("./out/images/france.png"), 32, 32);
+
+        Object[] options = {polishIcon, englishIcon, franceIcon};
+
+        int choice = JOptionPane.showOptionDialog(
+                this,
+                "Wybierz język / Select Language / Sélectionner La Langue",
+                "Language Selection",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (choice == 0) {
+            return new Locale.Builder().setLanguage("pl").setRegion("PL").build();
+        } else if (choice == 2) {
+            return new Locale.Builder().setLanguage("fr").setRegion("FR").build();
+        } else {
+            return new Locale.Builder().setLanguage("en").setRegion("US").build();
+        }
+    }
+
+
+    private ImageIcon resizeIcon(ImageIcon icon, int width, int height){
+        Image img = icon.getImage();
+        Image newImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(newImg);
     }
 }
